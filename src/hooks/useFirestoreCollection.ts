@@ -5,6 +5,8 @@ import {
   FirestoreError,
   QuerySnapshot,
   DocumentData,
+  query,
+  orderBy,
 } from 'firebase/firestore';
 import { db } from '../../firebase.js'; // Ensure you have configured Firebase and Firestore
 
@@ -19,8 +21,9 @@ const useFirestoreCollection = (collectionName: string) => {
 
   useEffect(() => {
     const collectionRef = collection(db, collectionName);
+    const q = query(collectionRef, orderBy('createdAt', 'desc'));
     const unsubscribe = onSnapshot(
-      collectionRef,
+      q,
       (querySnapshot: QuerySnapshot<DocumentData>) => {
         setDocuments(
           querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))

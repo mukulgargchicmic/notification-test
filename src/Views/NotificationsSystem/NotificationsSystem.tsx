@@ -1,32 +1,27 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import { addDoc, collection } from 'firebase/firestore';
-import { useEffect, useState } from 'react';
-import { db, requestPermission } from '../../../firebase.js';
-import { FIREBASE_COLLECTION, STRINGS } from '../../Shared/Constants.js';
-import updateFirestoreDocument from '../../Shared/Util.js';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { useEffect } from 'react';
+import { db } from '../../../firebase.js';
+import { FIREBASE_COLLECTION, NOTIFICATION_STATUS, STRINGS } from '../../Shared/Constants.js';
 import useFirestoreCollection from '../../hooks/useFirestoreCollection.js';
 import buttonConfig from './helpers/constants.js';
 import ButtonGroup from './components/ButtonGroup.js';
 import NotificationList from './components/NotificationList.js';
+import UTILS from '../../Shared/Util.js';
 
 function NotificationsSystem() {
-  const [tokenData, setToken] = useState<string | null>('');
   const { documents: notifications } = useFirestoreCollection(
     FIREBASE_COLLECTION.NOTIFICATIONS
   );
 
   useEffect(() => {
-    requestPermission()
-      .then((token) => setToken(token))
-      .catch((err) => {
-        console.log(err);
-      });
+    UTILS.requestNotificationPermission();
   }, []);
 
   const markAsRead = async (id: string) => {
     const updateData = { read: true };
-    await updateFirestoreDocument(
+    await UTILS.updateFirestoreDocument(
       FIREBASE_COLLECTION.NOTIFICATIONS,
       id,
       updateData
@@ -35,12 +30,13 @@ function NotificationsSystem() {
 
   const handleSendNotification = async (message: string) => {
     try {
-      if (tokenData) {
+      if (Notification.permission === NOTIFICATION_STATUS.GRANTED) {
         const notificationRef = await addDoc(
           collection(db, FIREBASE_COLLECTION.NOTIFICATIONS),
           {
             message,
             read: false,
+            createdAt: serverTimestamp(),
           }
         );
         const notificationId = notificationRef.id;

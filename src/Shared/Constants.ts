@@ -28,10 +28,19 @@ const STRINGS = {
   NOTIFICATION_SENT: {
     SUCCESS: 'Notification sent successfully',
     FAILURE: 'Failed to send notification',
+    GRANTED: 'Notification permission granted.',
+    DENIED: 'Notification permission denied.',
+    ENABLED: 'Notifications are already enabled.',
+    BLOCKED: 'Notifications are blocked.',
+    ERROR: 'Error requesting notification permission:',
   },
   NEW_NOTIFICATION: 'New Notification',
   NOTIFICATION_SYSTEM: 'Notification System',
   READ: 'Read',
   UNREAD: 'Unread',
 };
-export { ROUTES, WILDCARD_ROUTES, ROUTES_CONFIG, FIREBASE_COLLECTION, STRINGS };
+
+const NOTIFICATION_STATUS = {
+  GRANTED: 'granted',
+}
+export { ROUTES, WILDCARD_ROUTES, ROUTES_CONFIG, FIREBASE_COLLECTION, STRINGS, NOTIFICATION_STATUS };
