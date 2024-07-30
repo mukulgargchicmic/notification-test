@@ -29,7 +29,7 @@ function NotificationList({
                 notification.read ? 'text-green-500' : 'text-red-500'
               }`}
             >
-              {notification.read ? 'Read' : 'Unread'}
+              {notification.read ? 'Read' : 'Mark As Read'}
             </span>
           </div>
         </li>

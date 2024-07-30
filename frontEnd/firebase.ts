@@ -3,6 +3,7 @@ import { connectAuthEmulator, getAuth } from 'firebase/auth';
 import { connectFirestoreEmulator, getFirestore } from 'firebase/firestore';
 import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 import registerServiceWorker from './src/register-sw';
+import { toast } from 'react-toastify';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
@@ -25,6 +26,19 @@ if (window.location.hostname === 'localhost' && isUseEmulators === 'true') {
   connectFirestoreEmulator(db, 'localhost', 8080);
   connectAuthEmulator(auth, 'http://localhost:9099');
 }
+const requestNotificationPermission = async () => {
+  try {
+    if (Notification.permission === 'default') {
+      const permission = await Notification.requestPermission();
+      if (permission === 'granted'){
+          return true;
+      }
+      return toast.error('Notification Permission denied! Please allow permission and reload');
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 const requestPermission = async (): Promise<string | null> => {
   try {
@@ -36,6 +50,7 @@ const requestPermission = async (): Promise<string | null> => {
     }
 
 // Request permission to send notifications
+await requestNotificationPermission();
 const token = await getToken(messaging, {
   vapidKey,
   serviceWorkerRegistration: registration,

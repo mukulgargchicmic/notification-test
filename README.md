@@ -31,6 +31,7 @@ test-job/
 ## Env Addition
   - Add .env at root of backEnd folder.
   - Add .env.development at root of frontEnd folder.
+  - Add serviceAccountKey.json at root of backEnd folder.
 
 ## Emulators
  For running emulators update the key 'VITE_APP_CONNECT_WITH_EMULATORS' to true in .env.development.
