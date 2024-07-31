@@ -29,16 +29,17 @@ test-job/
    cd testjob
 
 ## Env Addition
-  - Add .env at root of backEnd folder.
-  - Add .env.development at root of frontEnd folder.
-  - Add serviceAccountKey.json at root of backEnd folder.
+  - Add ".env" at root of backEnd folder.
+  - Add ".env.development" at root of frontEnd folder.
+  - Add "serviceAccountKey.json" at root of backEnd folder.
 
-## Emulators
- For running emulators update the key 'VITE_APP_CONNECT_WITH_EMULATORS' to true in .env.development.
- and run command
- cd frontEnd && firebase emulators:start
- 
 ## Script to start project
  - npm i 
  - npm run install
  - npm start
+
+## Emulators
+ - For running emulators update the key 'VITE_APP_CONNECT_WITH_EMULATORS' to true in .env.development.
+   and run command
+ - cd frontEnd
+ - firebase emulators:start
