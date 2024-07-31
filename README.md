@@ -38,8 +38,12 @@ test-job/
  - npm run install
  - npm start
 
+## Emulators Prerequisites
+Java version 11 or higher should be installed, and the Firebase tools should also be installed.
+ 
 ## Emulators
  - For running emulators update the key 'VITE_APP_CONNECT_WITH_EMULATORS' to true in .env.development.
    and run command
  - cd frontEnd
  - firebase emulators:start
+ 
